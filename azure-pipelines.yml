@@ -14,8 +14,8 @@ pool:
 
 steps:
   - script: |
-      displayName: "Display what is in the Pipeline.Workspace"
-      ls -laR $(Pipeline.Workspace)
+      displayName: "Display what is in the Build.SourcesDirectory"
+      ls -laR --ignore=".git" $(Build.SourcesDirectory)
 
   - task: AzureCLI@2
     displayName: Deploy Storage Account
@@ -28,7 +28,7 @@ steps:
         stgName = $(az deployment group create \
         --resource-group newrg \
         --name stg.deploy.002 \
-        --template-file "$(Pipeline.Workspace)/main.bicep" \
+        --template-file "$(Build.SourcesDirectory)/main.bicep" \
         --parameters storageAccountName=yzstgname \
         --query properties.outputs.storageAccountName.value -o tsv)
         echo "##vso[task.setvariable variable=var1;]${stgName}"
