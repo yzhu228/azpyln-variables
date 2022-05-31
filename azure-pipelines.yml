@@ -25,7 +25,7 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az --version
-        stgName = $(az deployment group create \
+        stgName=$(az deployment group create \
         --resource-group newrg \
         --name stg.deploy.002 \
         --template-file "$(Build.SourcesDirectory)/main.bicep" \
