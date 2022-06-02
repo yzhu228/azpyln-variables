@@ -47,9 +47,11 @@ steps:
         --name stg.deploy.002 \
         --query properties.outputs | jq -c 'to_entries[] | [.key, .value.value]')
         echo "$deploymentOutputs" | while IFS=$'\n' read -r c; do
-          echo $c
+          outputname=$(echo "$c" | jq -r '.[0]')
+          outputvalue=$(echo "$c" | jq -r '.[1]')
+          echo "##vso[task.setvariable variable=$outputname;]$outputvalue"
         done
-        echo "##vso[task.setvariable variable=var1;]$deploymentOutputs"
 
   - script: |
-      echo "var1= $(var1)"
+      echo "storageAccountName = $(storageAccountName)"
+      echo "storageAccountWebId = $(storageAccountWebId)"
