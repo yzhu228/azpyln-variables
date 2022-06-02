@@ -45,8 +45,8 @@ steps:
         deploymentOutputs=$(az deployment group show \
         --resource-group newrg \
         --name stg.deploy.002 \
-        --query properties.outputs)
-        echo $deploymentOutputs
+        --query properties.outputs | jq -c 'to_entries[] | [.key, .value.value]')
+        echo "$deploymentOutputs"
         echo "##vso[task.setvariable variable=var1;]$deploymentOutputs"
         whereis jq
 
