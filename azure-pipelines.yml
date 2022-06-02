@@ -46,7 +46,7 @@ steps:
         --resource-group newrg \
         --name stg.deploy.002 \
         --query properties.outputs | jq -c 'to_entries[] | [.key, .value.value]')
-        cat $deploymentOutputs | while IFS=$'\n' read -r c; do
+        echo "$deploymentOutputs" | while IFS=$'\n' read -r c; do
           echo $c
         done
         echo "##vso[task.setvariable variable=var1;]$deploymentOutputs"
