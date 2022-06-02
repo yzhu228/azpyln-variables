@@ -34,5 +34,21 @@ steps:
         echo $stgName
         echo "##vso[task.setvariable variable=var1;]$stgName"
 
+  - task: AzureCLI@2
+    displayName: Retrieve deployment outputs
+    inputs:
+      azureSubscription: azure-a104-course
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        deploymentOutputs=$(az deployment group show \
+        --resource-group newrg \
+        --name stg.deploy.002 \
+        --query properties.outputs)
+        echo $deploymentOutputs
+        echo "##vso[task.setvariable variable=var1;]$deploymentOutputs"
+        whereis jq
+
   - script: |
       echo "var1= $(var1)"
