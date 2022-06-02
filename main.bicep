@@ -31,3 +31,4 @@ resource websiteContainer 'Microsoft.Storage/storageAccounts/blobServices/contai
 }
 
 output storageAccountName string = storage.name
+output storageAccountWebId string = websiteContainer.id
